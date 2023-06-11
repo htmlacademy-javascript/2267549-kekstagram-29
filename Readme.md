@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Ksenia Malyshkina](https://up.htmlacademy.ru/javascript/29/user/2267549).
-* Наставник: `Неизвестно`.
+* Наставник: [Владимир Шишлянников](https://htmlacademy.ru/profile/id1082173).
 
 ---
 
