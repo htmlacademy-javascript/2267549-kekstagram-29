@@ -57,10 +57,10 @@ const generatePhotoLikes = createRandomGenerator(15, 200);
 const generateCommentAvatar = createRandomGenerator(0, 30);
 
 const createComment = () => {
-  const Avatar = generateCommentAvatar();
+  const avatar = generateCommentAvatar();
   return {
     id: generatePhotoId(),
-    avatar: `img/avatar-${Avatar}.svg`,
+    avatar: `img/avatar-${avatar}.svg`,
     message: getRandomArrayElement(COMMENTS_MESSAGE),
     name: getRandomArrayElement(COMMENTS_NAME),
   };
