@@ -32,13 +32,14 @@ const COMMENTS_NAME = [
 ];
 
 const generatePhotoId = createRandomGenerator(1, 25);
+const generateComentId = createRandomGenerator(1, 100);
 const generatePhotoLikes = createRandomGenerator(15, 200);
 const generateCommentAvatar = createRandomGenerator(0, 30);
 
 const createComment = () => {
   const avatar = generateCommentAvatar();
   return {
-    id: generatePhotoId(),
+    id: generateComentId(),
     avatar: `img/avatar-${avatar}.svg`,
     message: getRandomArrayElement(COMMENTS_MESSAGE),
     name: getRandomArrayElement(COMMENTS_NAME),
