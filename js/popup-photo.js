@@ -62,5 +62,4 @@ function onDocumentKeydown(evt){
 
 popupPhotoClose.addEventListener('click', onButtonCloseClick);
 
-
 export {openPopupPhoto};
