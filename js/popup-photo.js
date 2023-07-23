@@ -1,5 +1,7 @@
 import {isEscapeKey} from './util.js';
 
+const DEFAULT_SHOW_COMMENTS = 5;
+
 const popupPhoto = document.querySelector('.big-picture');
 const popupPhotoClose = document.querySelector('#picture-cancel');
 const popupPhotoUrl = popupPhoto.querySelector('.big-picture__img img');
@@ -8,7 +10,11 @@ const popupPhotoComents = popupPhoto.querySelector('.comments-count');
 const popupPhotoCaption = popupPhoto.querySelector('.social__caption');
 const popupPhotoListComents = popupPhoto.querySelector('.social__comments');
 const socialCommentCount = popupPhoto.querySelector('.social__comment-count');
-const commentsLoader = popupPhoto.querySelector('.comments-loader');
+const commentsLoaderButton = popupPhoto.querySelector('.comments-loader');
+const commentTemplate = document.querySelector('.social__comment');
+
+let commentsShown = 0;
+let commentsArray = [];
 
 const createPopupPhoto = ({comments, url, description, likes}) => {
   popupPhotoUrl.src = url;
@@ -17,20 +23,34 @@ const createPopupPhoto = ({comments, url, description, likes}) => {
   popupPhotoCaption.textContent = description;
 };
 
-const renderComents = (comments) => {
+const createComment = ({avatar, message, name}) => {
+  const element = commentTemplate.cloneNode(true);
+  commentTemplate.querySelector('.social__picture').src = avatar;
+  commentTemplate.querySelector('.social__picture').alt = name;
+  commentTemplate.querySelector('.social__text').innerHTML = message;
+  return element;
+};
+
+const renderComents = () => {
   popupPhotoListComents.textContent = '';
-  comments.forEach(({ avatar, message, name }) => {
-    const itemComment = `
-    <li class="social__comment">
-    <img
-        class="social__picture"
-        src="${avatar}"
-        alt="${name}"
-        width="35" height="35">
-    <p class="social__text">${message}</p>
-    </li>`;
-    popupPhotoListComents.innerHTML += itemComment;
-  });
+  commentsShown += DEFAULT_SHOW_COMMENTS;
+  if (commentsShown >= commentsArray.length) {
+    commentsLoaderButton.classList.add('hidden');
+    commentsShown = commentsArray.length;
+  } else {
+    commentsLoaderButton.classList.remove('hidden');
+  }
+
+  const commentFragment = document.createDocumentFragment();
+
+  for (let i = 0; i < commentsShown; i++) {
+    const commentElement = createComment(commentsArray[i]);
+    commentFragment.append(commentElement);
+  }
+
+  popupPhotoListComents.innerHTML = '';
+  popupPhotoListComents.append(commentFragment);
+  socialCommentCount.innerHTML = `${commentsShown} из <span class="comments-count">${commentsArray.length}</span> комментариев`;
 };
 
 const openPopupPhoto = (arrayPhoto) => {
@@ -38,15 +58,22 @@ const openPopupPhoto = (arrayPhoto) => {
   document.querySelector('body').classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   createPopupPhoto(arrayPhoto);
-  renderComents(arrayPhoto.comments);
-  socialCommentCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
+  commentsArray = arrayPhoto.comments;
+  if (commentsArray.length === 0) {
+    popupPhotoListComents.innerHTML = '';
+    commentsLoaderButton.classList.add('hidden');
+    socialCommentCount.innerHTML = `${commentsShown} из <span class="comments-count">${commentsArray.length}</span> комментариев`;
+  }
+  if (commentsArray.length > 0) {
+    renderComents();
+  }
 };
 
 const closePopupPhoto = () => {
   popupPhoto.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  commentsShown = 0;
 };
 
 const onButtonCloseClick = () => {
@@ -60,6 +87,12 @@ function onDocumentKeydown(evt){
   }
 }
 
+const onButtoncommentsLoader = () => {
+  renderComents();
+};
+
 popupPhotoClose.addEventListener('click', onButtonCloseClick);
+
+commentsLoaderButton.addEventListener('click', onButtoncommentsLoader);
 
 export {openPopupPhoto};
