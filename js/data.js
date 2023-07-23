@@ -1,7 +1,7 @@
 import {getRandomInteger, createRandomGenerator, getRandomArrayElement} from './util.js';
 
 const PHOTO_COUNT = 25;
-const COMMENTS_COUNT = 2;
+const COMMENTS_COUNT = 20;
 
 const PHOTO_DESCRIPTIONS = [
   'Доброе утро',
@@ -34,17 +34,13 @@ const COMMENTS_NAME = [
 const generatePhotoId = createRandomGenerator(1, 25);
 const generateComentId = createRandomGenerator(1, 100);
 const generatePhotoLikes = createRandomGenerator(15, 200);
-const generateCommentAvatar = createRandomGenerator(0, 30);
 
-const createComment = () => {
-  const avatar = generateCommentAvatar();
-  return {
-    id: generateComentId(),
-    avatar: `img/avatar-${avatar}.svg`,
-    message: getRandomArrayElement(COMMENTS_MESSAGE),
-    name: getRandomArrayElement(COMMENTS_NAME),
-  };
-};
+const createComment = () => ({
+  id: generateComentId(),
+  avatar: `img/avatar-${getRandomInteger(1,6)}.svg`,
+  message: getRandomArrayElement(COMMENTS_MESSAGE),
+  name: getRandomArrayElement(COMMENTS_NAME),
+});
 
 const createPhoto = () => {
   const id = generatePhotoId();
