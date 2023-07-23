@@ -1,7 +1,8 @@
+
 import {getRandomInteger, createRandomGenerator, getRandomArrayElement} from './util.js';
 
 const PHOTO_COUNT = 25;
-const COMMENTS_COUNT = 2;
+const COMMENTS_COUNT = 20;
 
 const PHOTO_DESCRIPTIONS = [
   'Доброе утро',
@@ -56,3 +57,4 @@ const createPhoto = () => {
 
 const createPhotos = () => Array.from({length: PHOTO_COUNT}, createPhoto);
 export {createPhotos};
+
