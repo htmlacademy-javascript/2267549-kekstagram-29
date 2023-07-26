@@ -1,4 +1,5 @@
 import {isEscapeKey} from './util.js';
+import {onPhotoScaleUpButtonClick, onPhotoScaleDownButtonClick} from './validate-form.js';
 
 const MAX_HASHTAGS_COUNTS = 5;
 const MAX_COMMENT_LENGTH = 140;
@@ -14,6 +15,8 @@ const uploadCancelButton = document.querySelector('.img-upload__cancel');
 const uploadForm = document.querySelector('.img-upload__form');
 const hashtagsInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
+const photoScaleDownButton = document.querySelector('.scale__control--smaller');
+const photoScaleUpButton = document.querySelector('.scale__control--bigger');
 
 const erorrConfig = {
   classTo: 'img-upload__field-wrapper',
@@ -68,6 +71,8 @@ const closeForm = () => {
   document.body.classList.remove('.modal-open');
   uploadForm.removeEventListener('submit', onSubmitButtonClick);
   uploadCancelButton.removeEventListener('click', onButtonCloseUploadForm);
+  photoScaleDownButton.removeEventListener('click', onPhotoScaleDownButtonClick);
+  photoScaleUpButton.removeEventListener('click', onPhotoScaleUpButtonClick);
 };
 
 const openForm = () => {
@@ -76,6 +81,8 @@ const openForm = () => {
   document.addEventListener('keydown', onDocumentKeydown);
   uploadForm.addEventListener('submit', onSubmitButtonClick);
   uploadCancelButton.addEventListener('click', onButtonCloseUploadForm);
+  photoScaleDownButton.addEventListener('click', onPhotoScaleDownButtonClick);
+  photoScaleUpButton.addEventListener('click', onPhotoScaleUpButtonClick);
 };
 
 function onButtonCloseUploadForm () {
@@ -96,3 +103,4 @@ function onDocumentKeydown(evt) {
 }
 
 uploadField.addEventListener('change', onFileInputChange);
+
