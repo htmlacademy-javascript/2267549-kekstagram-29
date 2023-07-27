@@ -1,4 +1,5 @@
-const sliderNode = document.querySelector('.img-upload__effect-level');
+const sliderNode = document.querySelector('.effect-level__slider');
+const sliderNodeContainer = document.querySelector('.img-upload__effect-level');
 const effectValueInput = document.querySelector('.effect-level__value');
 const effectsList = document.querySelector('.effects__list');
 const PhotoUploadPreview = document.querySelector('.img-upload__preview');
@@ -70,8 +71,8 @@ const effectsUnits = {
   heat: ''
 };
 
-const hideSlider = () => sliderNode.classList.add('hidden');
-const showSlider = () => sliderNode.classList.remove('hidden');
+const hideSlider = () => sliderNodeContainer.classList.add('hidden');
+const showSlider = () => sliderNodeContainer.classList.remove('hidden');
 
 const destroySlider = () => {
   if (sliderNode.noUiSlider) {
