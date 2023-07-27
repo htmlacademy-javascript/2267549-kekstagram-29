@@ -54,7 +54,6 @@ const configFilters = {
   }
 };
 
-
 const styleEffecftsName = {
   chrome: 'grayscale',
   sepia: 'sepia',
@@ -80,7 +79,7 @@ const destroySlider = () => {
   }
 };
 
-const getEffect = (currentEffect) => {
+const changeEffect = (currentEffect) => {
   const valueCurrent = sliderNode.noUiSlider.get();
   const styleEffecftCurrent = styleEffecftsName[currentEffect];
   const effectsUnitsCurrent = effectsUnits[currentEffect];
@@ -102,11 +101,9 @@ const applyEffect = (currentEffect) => {
     step: effect.step,
     connect: 'lower',
   });
-
-  getEffect(currentEffect);
-
+  changeEffect(currentEffect);
   sliderNode.noUiSlider.on('update', () => {
-    getEffect(currentEffect);
+    changeEffect(currentEffect);
   });
 };
 
@@ -121,4 +118,9 @@ const onChangeFilter = () => {
   applyEffect(currentEffect);
 };
 
-effectsList.addEventListener('change', onChangeFilter);
+const setEffectSlider = () => {
+  hideSlider();
+  effectsList.addEventListener('change', onChangeFilter);
+};
+
+export {setEffectSlider};
