@@ -1408,3 +1408,22 @@ main {
 .hidden {
   display: none;
 }
+
+
+.container-error-message {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 20%;
+  background-color:#000000;
+}
+
+.error-message {
+  position: absolute;
+  left: 0%;
+  font-size: 20px;
+  padding: 40px 60px;
+  color: red;
+  text-transform: none;
+}
