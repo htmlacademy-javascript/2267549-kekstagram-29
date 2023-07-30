@@ -2,6 +2,8 @@ import {isEscapeKey} from './util.js';
 import {setScale, resetScale} from './scale.js';
 import {setEffectSlider} from './effects.js';
 import {isValid, resetValidator} from './validator.js';
+import {sendData} from './api.js';
+import {showSuccessMessage, showErrorMessage} from './message.js';
 
 const uploadField = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -9,15 +11,37 @@ const uploadCancelButton = document.querySelector('.img-upload__cancel');
 const uploadForm = document.querySelector('.img-upload__form');
 const hashtagsInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
+const submitButton = uploadForm.querySelector('.img-upload__submit');
 
-const onSubmitButtonClick = (evt) => {
-  evt.preventDefault();
-
-  if(isValid) {
-    uploadForm.submit();
-  }
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
 };
 
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
+
+const setFormUpdateSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
+
+    evt.preventDefault();
+
+    if(isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(() => {
+          onSuccess();
+          showSuccessMessage();
+        })
+        .catch(
+          () => {
+            showErrorMessage();
+          }
+        )
+        .finally(unblockSubmitButton);
+    }
+  });
+};
 const closeForm = () => {
   uploadForm.reset();
   resetValidator();
@@ -25,7 +49,6 @@ const closeForm = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('.modal-open');
-  uploadForm.removeEventListener('submit', onSubmitButtonClick);
   uploadCancelButton.removeEventListener('click', onButtonCloseUploadForm);
 };
 
@@ -33,7 +56,6 @@ const openForm = () => {
   uploadOverlay.classList.remove('hidden');
   document.body.classList.add('.modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-  uploadForm.addEventListener('submit', onSubmitButtonClick);
   uploadCancelButton.addEventListener('click', onButtonCloseUploadForm);
   setEffectSlider();
   setScale();
@@ -56,5 +78,10 @@ function onDocumentKeydown(evt) {
   }
 }
 
-uploadField.addEventListener('change', onFileInputChange);
+const setFormEventListeners = () => {
+  uploadField.addEventListener('change', onFileInputChange);
+  setFormUpdateSubmit(closeForm);
+};
+
+export { setFormEventListeners };
 

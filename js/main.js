@@ -1,5 +1,13 @@
-import {createPhotos} from './data.js';
 import {renderGallery} from './gallery.js';
-import './form.js';
+import {setFormEventListeners} from './form.js';
+import { get as getData} from './api.js';
+import {openErrorMessage} from './util.js';
 
-renderGallery(createPhotos());
+getData()
+  .then((picture) => {
+    renderGallery(picture);
+  })
+  .catch(() => openErrorMessage('Не удалось получить данные с сервера'));
+
+
+setFormEventListeners();

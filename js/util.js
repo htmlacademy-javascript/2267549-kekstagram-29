@@ -1,3 +1,4 @@
+const DEFAULT_SHOW_ERROR_TIME = 10000;
 
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -25,4 +26,19 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export{getRandomInteger, createRandomGenerator, getRandomArrayElement, isEscapeKey};
+const openErrorMessage = (message) => {
+  const containerErrorMessage = document.createElement('div');
+  containerErrorMessage.classList.add('container-error-message');
+  document.body.append(containerErrorMessage);
+
+  const errorMessage = document.createElement('div');
+  errorMessage.textContent = message;
+  errorMessage.classList.add('error-message');
+  containerErrorMessage.append(errorMessage);
+
+  setTimeout(() => {
+    containerErrorMessage.remove();
+  }, DEFAULT_SHOW_ERROR_TIME);
+};
+
+export{getRandomInteger, createRandomGenerator, getRandomArrayElement, isEscapeKey, openErrorMessage};

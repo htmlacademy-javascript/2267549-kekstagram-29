@@ -55,7 +55,7 @@ const configFilters = {
   }
 };
 
-const STYLEEFFECTSNAME = {
+const StyleEffectsName = {
   chrome: 'grayscale',
   sepia: 'sepia',
   marvin: 'invert',
@@ -63,7 +63,7 @@ const STYLEEFFECTSNAME = {
   heat: 'brightness'
 };
 
-const EFFECTSUNITS = {
+const EffectsUnits = {
   chrome: '',
   sepia: '',
   marvin: '%',
@@ -82,8 +82,8 @@ const destroySlider = () => {
 
 const changeEffect = (currentEffect) => {
   const valueCurrent = sliderNode.noUiSlider.get();
-  const styleEffecftCurrent = STYLEEFFECTSNAME[currentEffect];
-  const effectsUnitsCurrent = EFFECTSUNITS[currentEffect];
+  const styleEffecftCurrent = StyleEffectsName[currentEffect];
+  const effectsUnitsCurrent = EffectsUnits[currentEffect];
   effectValueInput.value = valueCurrent;
 
   photoUploadPreview.style.filter = `${styleEffecftCurrent}(${valueCurrent}${effectsUnitsCurrent})`;
