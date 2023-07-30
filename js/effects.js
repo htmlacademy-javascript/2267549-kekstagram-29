@@ -2,7 +2,7 @@ const sliderNode = document.querySelector('.effect-level__slider');
 const sliderNodeContainer = document.querySelector('.img-upload__effect-level');
 const effectValueInput = document.querySelector('.effect-level__value');
 const effectsList = document.querySelector('.effects__list');
-const PhotoUploadPreview = document.querySelector('.img-upload__preview');
+const photoUploadPreview = document.querySelector('.img-upload__preview');
 
 const configFilters = {
   default: {
@@ -55,7 +55,7 @@ const configFilters = {
   }
 };
 
-const styleEffecftsName = {
+const STYLEEFFECTSNAME = {
   chrome: 'grayscale',
   sepia: 'sepia',
   marvin: 'invert',
@@ -63,7 +63,7 @@ const styleEffecftsName = {
   heat: 'brightness'
 };
 
-const effectsUnits = {
+const EFFECTSUNITS = {
   chrome: '',
   sepia: '',
   marvin: '%',
@@ -82,11 +82,11 @@ const destroySlider = () => {
 
 const changeEffect = (currentEffect) => {
   const valueCurrent = sliderNode.noUiSlider.get();
-  const styleEffecftCurrent = styleEffecftsName[currentEffect];
-  const effectsUnitsCurrent = effectsUnits[currentEffect];
+  const styleEffecftCurrent = STYLEEFFECTSNAME[currentEffect];
+  const effectsUnitsCurrent = EFFECTSUNITS[currentEffect];
   effectValueInput.value = valueCurrent;
 
-  PhotoUploadPreview.style.filter = `${styleEffecftCurrent}(${valueCurrent}${effectsUnitsCurrent})`;
+  photoUploadPreview.style.filter = `${styleEffecftCurrent}(${valueCurrent}${effectsUnitsCurrent})`;
 };
 
 const applyEffect = (currentEffect) => {

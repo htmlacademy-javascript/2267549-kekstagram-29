@@ -27,8 +27,6 @@ const closeForm = () => {
   document.body.classList.remove('.modal-open');
   uploadForm.removeEventListener('submit', onSubmitButtonClick);
   uploadCancelButton.removeEventListener('click', onButtonCloseUploadForm);
-  //photoScaleDownButton.removeEventListener('click', onPhotoScaleDownButtonClick);
-  //photoScaleUpButton.removeEventListener('click', onPhotoScaleUpButtonClick);
 };
 
 const openForm = () => {
