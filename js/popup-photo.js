@@ -25,9 +25,9 @@ const createPopupPhoto = ({comments, url, description, likes}) => {
 
 const createComment = ({avatar, message, name}) => {
   const element = commentTemplate.cloneNode(true);
-  commentTemplate.querySelector('.social__picture').src = avatar;
-  commentTemplate.querySelector('.social__picture').alt = name;
-  commentTemplate.querySelector('.social__text').innerHTML = message;
+  element.querySelector('.social__picture').src = avatar;
+  element.querySelector('.social__picture').alt = name;
+  element.querySelector('.social__text').innerHTML = message;
   return element;
 };
 
