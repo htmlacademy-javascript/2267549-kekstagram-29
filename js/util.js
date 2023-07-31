@@ -7,23 +7,6 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-const createRandomGenerator = (min, max) => {
-  const arrayValue = [];
-  return function() {
-    let currentValue = getRandomInteger(min, max);
-    if (arrayValue.length >= max - min + 1) {
-      return null;
-    }
-    while (arrayValue.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
-    }
-    arrayValue.push(currentValue);
-    return currentValue;
-  };
-};
-
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const openErrorMessage = (message) => {
@@ -41,4 +24,12 @@ const openErrorMessage = (message) => {
   }, DEFAULT_SHOW_ERROR_TIME);
 };
 
-export{getRandomInteger, createRandomGenerator, getRandomArrayElement, isEscapeKey, openErrorMessage};
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export{getRandomInteger, isEscapeKey, openErrorMessage, debounce};
