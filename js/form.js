@@ -5,6 +5,8 @@ import {isValid, resetValidator} from './validator.js';
 import {sendData} from './api.js';
 import {showSuccessMessage, showErrorMessage} from './message.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const uploadField = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadCancelButton = document.querySelector('.img-upload__cancel');
@@ -12,6 +14,7 @@ const uploadForm = document.querySelector('.img-upload__form');
 const hashtagsInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
 const submitButton = uploadForm.querySelector('.img-upload__submit');
+const imgPreview = document.querySelector('.img-upload__preview img');
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -61,12 +64,23 @@ const openForm = () => {
   setScale();
 };
 
+const showSelectImg = () => {
+  const file = uploadField.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    imgPreview.src = URL.createObjectURL(file);
+  }
+};
+
 function onButtonCloseUploadForm () {
   closeForm();
 }
 
 const onFileInputChange = () => {
   openForm();
+  showSelectImg();
 };
 
 const isTextFieldFocused = () => document.activeElement === hashtagsInput || document.activeElement === commentInput;
