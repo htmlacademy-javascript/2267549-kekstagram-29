@@ -1,8 +1,8 @@
-const photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const container = document.querySelector('.pictures');
+const photoTemplateNode = document.querySelector('#picture').content.querySelector('.picture');
+const containerPicturesNode = document.querySelector('.pictures');
 
 const createPhoto = ({comments, url, description, likes, id}) => {
-  const elementTemplate = photoTemplate.cloneNode(true);
+  const elementTemplate = photoTemplateNode.cloneNode(true);
   elementTemplate.querySelector('.picture__img').src = url;
   elementTemplate.querySelector('.picture__img').alt = description;
   elementTemplate.querySelector('.picture__likes').textContent = likes;
@@ -18,7 +18,7 @@ const insertPhotosToPage = (pictures) =>{
     const element = createPhoto(picture);
     photoFragment.append(element);
   });
-  container.append(photoFragment);
+  containerPicturesNode.append(photoFragment);
 };
 
 export {insertPhotosToPage};

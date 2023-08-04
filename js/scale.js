@@ -3,24 +3,24 @@ const STEP_MIN = 25;
 const STEP_MAX = 100;
 const SCALE_DEFAULT = 100;
 
-const photoScaleInput = document.querySelector('.scale__control--value');
-const photoUploadPreview = document.querySelector('.img-upload__preview img');
-const photoScaleDownButton = document.querySelector('.scale__control--smaller');
-const photoScaleUpButton = document.querySelector('.scale__control--bigger');
+const scaleValueNode = document.querySelector('.scale__control--value');
+const photoUploadPreviewNode = document.querySelector('.img-upload__preview img');
+const scaleDownButtonNode = document.querySelector('.scale__control--smaller');
+const scaleUpButtonNode = document.querySelector('.scale__control--bigger');
 
 const scalePhoto = (value) => {
-  photoScaleInput.value = `${value}%`;
-  photoUploadPreview.style.scale = value / 100;
+  scaleValueNode.value = `${value}%`;
+  photoUploadPreviewNode.style.scale = value / 100;
 };
 
 const onPhotoScaleDownButtonClick = () => {
-  const currentValue = parseInt (photoScaleInput.value, 10);
+  const currentValue = parseInt (scaleValueNode.value, 10);
   const newValue = Math.max(currentValue - STEP_SCALE, STEP_MIN);
   scalePhoto(newValue);
 };
 
 const onPhotoScaleUpButtonClick = () => {
-  const currentValue = parseInt (photoScaleInput.value, 10);
+  const currentValue = parseInt (scaleValueNode.value, 10);
   const newValue = Math.min(currentValue + STEP_SCALE, STEP_MAX);
   scalePhoto(newValue);
 };
@@ -30,8 +30,8 @@ const resetScale = () => {
 };
 
 const setScale = () => {
-  photoScaleDownButton.addEventListener('click', onPhotoScaleDownButtonClick);
-  photoScaleUpButton.addEventListener('click', onPhotoScaleUpButtonClick);
+  scaleDownButtonNode.addEventListener('click', onPhotoScaleDownButtonClick);
+  scaleUpButtonNode.addEventListener('click', onPhotoScaleUpButtonClick);
 };
 
 export {setScale, resetScale};
