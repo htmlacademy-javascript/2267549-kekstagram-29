@@ -4,14 +4,14 @@ import {getRandomInteger, debounce} from './util.js';
 
 const COUNT_RANDOM_PHOTO = 10;
 
-const container = document.querySelector('.pictures');
+const containerPicturesNode = document.querySelector('.pictures');
 const filtersNode = document.querySelector('.img-filters');
-const filtersButtons = document.querySelectorAll('.img-filters__button');
+const filtersButtonsNode = document.querySelectorAll('.img-filters__button');
 
 const changeActiveClassFilters = () => {
-  filtersButtons.forEach((filterButton) => {
+  filtersButtonsNode.forEach((filterButton) => {
     filterButton.addEventListener('click', (evt) => {
-      filtersButtons.forEach((button) => {
+      filtersButtonsNode.forEach((button) => {
         button.classList.remove('img-filters__button--active');
         button.disabled = false;
       });
@@ -72,7 +72,7 @@ const renderGallery = (pictures) => {
     }
   }));
 
-  container.addEventListener('click', (evt) => {
+  containerPicturesNode.addEventListener('click', (evt) => {
     const picture = evt.target.closest('[data-element-template-id]');
     if (!picture) {
       return;

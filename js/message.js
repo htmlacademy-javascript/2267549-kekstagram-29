@@ -1,7 +1,7 @@
 import {isEscapeKey} from './util.js';
 
-const successMessage = document.querySelector('#success').content.querySelector('.success');
-const errorMessage = document.querySelector('#error').content.querySelector('.error');
+const successMessageNode = document.querySelector('#success').content.querySelector('.success');
+const errorMessageNode = document.querySelector('#error').content.querySelector('.error');
 
 const closeMessage = () => {
   const messageBlock = document.querySelector('.success') || document.querySelector('.error');
@@ -32,12 +32,12 @@ const showMessage = (message, closeButtonClass) => {
 };
 
 const showSuccessMessage = () => {
-  showMessage(successMessage, '.success__button');
+  showMessage(successMessageNode, '.success__button');
 };
 
 
 const showErrorMessage = () => {
-  showMessage(errorMessage, '.error__button');
+  showMessage(errorMessageNode, '.error__button');
 };
 
 export {showSuccessMessage, showErrorMessage};
