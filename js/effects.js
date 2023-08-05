@@ -1,8 +1,10 @@
+const EFFECT_DEFAULT = 'default';
+
 const sliderNode = document.querySelector('.effect-level__slider');
-const sliderNodeContainer = document.querySelector('.img-upload__effect-level');
-const effectValueInput = document.querySelector('.effect-level__value');
-const effectsList = document.querySelector('.effects__list');
-const photoUploadPreview = document.querySelector('.img-upload__preview');
+const containerSliderNode = document.querySelector('.img-upload__effect-level');
+const effectLevelValueNode = document.querySelector('.effect-level__value');
+const effectsListNode = document.querySelector('.effects__list');
+const imgPreviewNode = document.querySelector('.img-upload__preview img');
 
 const configFilters = {
   default: {
@@ -71,8 +73,8 @@ const EffectsUnits = {
   heat: ''
 };
 
-const hideSlider = () => sliderNodeContainer.classList.add('hidden');
-const showSlider = () => sliderNodeContainer.classList.remove('hidden');
+const hideSlider = () => containerSliderNode.classList.add('hidden');
+const showSlider = () => containerSliderNode.classList.remove('hidden');
 
 const destroySlider = () => {
   if (sliderNode.noUiSlider) {
@@ -80,13 +82,13 @@ const destroySlider = () => {
   }
 };
 
-const changeEffect = (currentEffect) => {
+const changeEffect = (effect) => {
   const valueCurrent = sliderNode.noUiSlider.get();
-  const styleEffecftCurrent = StyleEffectsName[currentEffect];
-  const effectsUnitsCurrent = EffectsUnits[currentEffect];
-  effectValueInput.value = valueCurrent;
+  const styleEffecftCurrent = StyleEffectsName[effect];
+  const effectsUnitsCurrent = EffectsUnits[effect];
+  effectLevelValueNode.value = valueCurrent;
 
-  photoUploadPreview.style.filter = `${styleEffecftCurrent}(${valueCurrent}${effectsUnitsCurrent})`;
+  imgPreviewNode.style.filter = `${styleEffecftCurrent}(${valueCurrent}${effectsUnitsCurrent})`;
 };
 
 const applyEffect = (currentEffect) => {
@@ -98,7 +100,7 @@ const applyEffect = (currentEffect) => {
       min: effect.range.min,
       max: effect.range.max,
     },
-    start: effect.start,
+    start: effect.range.max,
     step: effect.step,
     connect: 'lower',
   });
@@ -109,10 +111,11 @@ const applyEffect = (currentEffect) => {
 };
 
 const onChangeFilter = () => {
-  const currentEffect = effectsList.querySelector('input:checked').value;
+  const currentEffect = effectsListNode.querySelector('input:checked').value;
 
   if (currentEffect === 'none'){
     hideSlider();
+    imgPreviewNode.style.filter = null;
     return;
   }
   showSlider();
@@ -121,7 +124,13 @@ const onChangeFilter = () => {
 
 const setEffectSlider = () => {
   hideSlider();
-  effectsList.addEventListener('change', onChangeFilter);
+  effectsListNode.addEventListener('change', onChangeFilter);
 };
 
-export {setEffectSlider};
+const resetEffect = () => {
+  const currentEffect = EFFECT_DEFAULT;
+  imgPreviewNode.style.filter = null;
+  applyEffect(currentEffect);
+};
+
+export {setEffectSlider, resetEffect};

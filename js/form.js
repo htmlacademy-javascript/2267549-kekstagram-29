@@ -1,31 +1,31 @@
 import {isEscapeKey} from './util.js';
 import {setScale, resetScale} from './scale.js';
-import {setEffectSlider} from './effects.js';
+import {setEffectSlider, resetEffect} from './effects.js';
 import {isValid, resetValidator} from './validator.js';
 import {sendData} from './api.js';
 import {showSuccessMessage, showErrorMessage} from './message.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
-const uploadField = document.querySelector('.img-upload__input');
-const uploadOverlay = document.querySelector('.img-upload__overlay');
-const uploadCancelButton = document.querySelector('.img-upload__cancel');
-const uploadForm = document.querySelector('.img-upload__form');
-const hashtagsInput = uploadForm.querySelector('.text__hashtags');
-const commentInput = uploadForm.querySelector('.text__description');
-const submitButton = uploadForm.querySelector('.img-upload__submit');
-const imgPreview = document.querySelector('.img-upload__preview img');
+const imgUploadInputNode = document.querySelector('.img-upload__input');
+const imgUploadOverlayNode = document.querySelector('.img-upload__overlay');
+const cancelButtonNode = document.querySelector('.img-upload__cancel');
+const formNode = document.querySelector('.img-upload__form');
+const hashtagNode = formNode.querySelector('.text__hashtags');
+const commentNode = formNode.querySelector('.text__description');
+const submitButtonNode = formNode.querySelector('.img-upload__submit');
+const imgPreviewNode = document.querySelector('.img-upload__preview img');
 
 const blockSubmitButton = () => {
-  submitButton.disabled = true;
+  submitButtonNode.disabled = true;
 };
 
 const unblockSubmitButton = () => {
-  submitButton.disabled = false;
+  submitButtonNode.disabled = false;
 };
 
 const setFormUpdateSubmit = (onSuccess) => {
-  uploadForm.addEventListener('submit', (evt) => {
+  formNode.addEventListener('submit', (evt) => {
 
     evt.preventDefault();
 
@@ -46,31 +46,32 @@ const setFormUpdateSubmit = (onSuccess) => {
   });
 };
 const closeForm = () => {
-  uploadForm.reset();
+  formNode.reset();
   resetValidator();
   resetScale();
+  resetEffect();
   document.removeEventListener('keydown', onDocumentKeydown);
-  uploadOverlay.classList.add('hidden');
+  imgUploadOverlayNode.classList.add('hidden');
   document.body.classList.remove('.modal-open');
-  uploadCancelButton.removeEventListener('click', onButtonCloseUploadForm);
+  cancelButtonNode.removeEventListener('click', onButtonCloseUploadForm);
 };
 
 const openForm = () => {
-  uploadOverlay.classList.remove('hidden');
+  imgUploadOverlayNode.classList.remove('hidden');
   document.body.classList.add('.modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-  uploadCancelButton.addEventListener('click', onButtonCloseUploadForm);
+  cancelButtonNode.addEventListener('click', onButtonCloseUploadForm);
   setEffectSlider();
   setScale();
 };
 
 const showSelectImg = () => {
-  const file = uploadField.files[0];
+  const file = imgUploadInputNode.files[0];
   const fileName = file.name.toLowerCase();
 
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
   if (matches) {
-    imgPreview.src = URL.createObjectURL(file);
+    imgPreviewNode.src = URL.createObjectURL(file);
   }
 };
 
@@ -83,7 +84,7 @@ const onFileInputChange = () => {
   showSelectImg();
 };
 
-const isTextFieldFocused = () => document.activeElement === hashtagsInput || document.activeElement === commentInput;
+const isTextFieldFocused = () => document.activeElement === hashtagNode || document.activeElement === commentNode;
 
 function onDocumentKeydown(evt) {
   if (isEscapeKey(evt) && !isTextFieldFocused()) {
@@ -93,9 +94,8 @@ function onDocumentKeydown(evt) {
 }
 
 const setFormEventListeners = () => {
-  uploadField.addEventListener('change', onFileInputChange);
+  imgUploadInputNode.addEventListener('change', onFileInputChange);
   setFormUpdateSubmit(closeForm);
 };
 
 export { setFormEventListeners };
-

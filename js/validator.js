@@ -6,16 +6,16 @@ const INVALID_HASHTAG_COUNT = 'Количество хэш-тегов не бо�
 const INVALID_HASHTAG_REPEAT = 'Хэш-теги не должны повторяться';
 const INVALID_COMMENT_LENGTH = 'Длина комментария не может составлять больше 140 символов';
 
-const uploadForm = document.querySelector('.img-upload__form');
-const hashtagsInput = uploadForm.querySelector('.text__hashtags');
-const commentInput = uploadForm.querySelector('.text__description');
+const formNode = document.querySelector('.img-upload__form');
+const hashtagNode = formNode.querySelector('.text__hashtags');
+const commentNode = formNode.querySelector('.text__description');
 
 const erorrConfig = {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper'
 };
 
-const pristine = new Pristine(uploadForm, erorrConfig);
+const pristine = new Pristine(formNode, erorrConfig);
 
 const isValid = pristine.validate;
 const resetValidator = pristine.reset;
@@ -43,9 +43,9 @@ const validateHashtagsDublicate = (value) => {
 
 const validateCommentLength = (value) => value.length <= MAX_COMMENT_LENGTH;
 
-pristine.addValidator(hashtagsInput, validateHashtagsCount, INVALID_HASHTAG_COUNT);
-pristine.addValidator(hashtagsInput, validateHashtagsFormat, INVALID_HASHTAG_FORMAT);
-pristine.addValidator(hashtagsInput, validateHashtagsDublicate, INVALID_HASHTAG_REPEAT);
-pristine.addValidator(commentInput, validateCommentLength, INVALID_COMMENT_LENGTH);
+pristine.addValidator(hashtagNode, validateHashtagsCount, INVALID_HASHTAG_COUNT);
+pristine.addValidator(hashtagNode, validateHashtagsFormat, INVALID_HASHTAG_FORMAT);
+pristine.addValidator(hashtagNode, validateHashtagsDublicate, INVALID_HASHTAG_REPEAT);
+pristine.addValidator(commentNode, validateCommentLength, INVALID_COMMENT_LENGTH);
 
 export {isValid, resetValidator};
